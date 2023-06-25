@@ -23,6 +23,8 @@ When Trying to run the code on your own machine.
 3. in the terminal type npm start and it will create a locally hosted web app that allows you to view
 current progress
 
+#testing the pushing to devOps
+
 # Contribute
 When attemping to push code I recoomend using the GitLens extension in vs code or visual studio
 You are required to do your standard push. Where you will first make sure that your repo is up to date
