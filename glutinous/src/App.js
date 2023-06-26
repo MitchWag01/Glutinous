@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 function HomePage() {
   return (
     <div>
-      <Button variant="contained">Glutinous</Button>
+      <Button variant="contained">Scan Item</Button>
     </div>
   );
 }
