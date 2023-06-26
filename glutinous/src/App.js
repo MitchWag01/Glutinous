@@ -1,9 +1,10 @@
 import React from 'react';
+import Button from '@mui/material/Button';
 
 function HomePage() {
   return (
     <div>
-      <h1>Glutinous</h1>
+      <Button variant="contained">Glutinous</Button>
     </div>
   );
 }
