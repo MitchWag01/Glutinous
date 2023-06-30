@@ -10,14 +10,6 @@ const Home = () => {
   return (
     <div>
       <Header></Header>
-      <ClickableButton
-        variant="contained"
-        color="primary"
-        onClick={handleClick}
-        sx={{ borderRadius: '50%' }}
-      >
-        Click me!
-      </ClickableButton>
     </div>
   );
 };

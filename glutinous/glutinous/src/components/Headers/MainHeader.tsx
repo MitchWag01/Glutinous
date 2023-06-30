@@ -17,6 +17,9 @@ const Header = () => {
         backgroundImage: 'url(/images/CroppedWheat.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        borderBottomLeftRadius: '1em',
+        borderBottomRightRadius: '1em',
+        boxShadow: '0px 10px 20px rgba(0,0,0,0.2)',
       }}
     >
       <Typography
