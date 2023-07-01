@@ -1,14 +1,16 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import SideBar from '../SideBar/SideBar';
 import { BrowserRouter as Router, Route,Routes, Link} from "react-router-dom";
-import Contact from '../../pages/Contact';
-import Home from '../../pages/Home';
-import Scan from'../../pages/Scan';
-import App from '../../App';
+// import Contact from '../../pages/Contact';
+// import Home from '../../pages/Home';
+// import Scan from'../../pages/Scan';
+// import App from '../../App';
+// import SideBar from '../SideBar/SideBar';
+import MenuButton from '../Buttons/MenuButton';
 
 const Header = () => {
   return (
+    
     <Box
       sx={{
         padding: 2,
@@ -28,14 +30,14 @@ const Header = () => {
         boxShadow: '0px 10px 20px rgba(0,0,0,0.2)',
       }}
     >
-      <Router>
+      {/* <Router>
         <SideBar />
         <Routes>
         <Route path='../../App' element={<App />} />
           <Route path='/Contact' element={<Contact />} />
           <Route path='/Scan' element={<Scan />} />
         </Routes>
-      </Router>
+      </Router> */}
       <Typography
         variant="h4"
         component="h1"
@@ -48,6 +50,9 @@ const Header = () => {
       >
         GLUTINOUS
       </Typography>
+      <MenuButton>
+      
+      </MenuButton>
     </Box>
   );
 };
