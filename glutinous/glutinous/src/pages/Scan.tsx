@@ -1,10 +1,18 @@
+import { AirlineSeatReclineNormalTwoTone } from '@mui/icons-material'
+import { Stack, Typography } from '@mui/material'
 import React from 'react'
 
+interface ScanProp {
+    ingredientsList: string
+}
 
-const Home: React.FunctionComponent = () => {
+const ScanPage: React.FC<ScanProp> = ({ingredientsList}) => {
     return (
-        <>Scanning your crappy food</>
+        <Stack>
+                  <Typography variant="h6">We will have to figure out the actual Scanning later</Typography>
+      <Typography>Ingredients: {ingredientsList}</Typography>
+        </Stack>    
     )
 }
 
-export default Home
+export default ScanPage;

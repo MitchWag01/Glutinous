@@ -9,7 +9,6 @@ const App = () => {
   return (
     <Stack>
       <Home />
-      <SearchButton />
     </Stack>
   )
 };

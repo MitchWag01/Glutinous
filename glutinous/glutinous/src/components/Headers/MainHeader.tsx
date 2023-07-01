@@ -50,9 +50,6 @@ const Header = () => {
       >
         GLUTINOUS
       </Typography>
-      <MenuButton>
-      
-      </MenuButton>
     </Box>
   );
 };

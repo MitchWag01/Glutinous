@@ -3,40 +3,60 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import * as Images from "@mui/icons-material";
-import { icons } from "react-icons";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import { useState, useRef } from "react";
 
-export default function MenuButton() {
-  const [item, setitem] = React.useState<null | HTMLElement>(null);
-  const Openmenu = Boolean(item);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setitem(event.currentTarget);
-  };
+interface MenuButtonProps {
+  setScanState: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const handleClose = () => {
-    setitem(null);
-  };
+const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
+    const [open, setOpen] = useState(false);
+    const anchorRef = useRef<HTMLButtonElement>(null);
+  
+    const handleToggle = () => {
+      setOpen((prevOpen) => !prevOpen);
+    };
+  
+    const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+      if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+        return;
+      }
+      setOpen(false);
+    };
+  
+    const handleScanItem = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+        return;
+      }
+      setOpen(false);
+      setScanState((prevState) => !prevState);
+    };
+    
 
   return (
     <div>
       <Button
       size="large"
       variant="contained"
-      startIcon={<Images.MenuTwoTone/>}
-        id="Menu-button"
-        aria-controls={Openmenu ? "open-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={Openmenu ? true : undefined}
-        onClick={handleClick}
-    
+          startIcon={<Images.MenuTwoTone/>}
+          sx={{ bgcolor: "transparent",
+          textShadow: '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000'}}
+          ref={anchorRef}
+          id="composition-button"
+          aria-controls={open ? "composition-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
+          aria-haspopup="true"
+          onClick={handleToggle}
+          
       >
         Menu
       </Button>
       <Menu
         id="open-menu"
-        anchorEl={item}
-        open={Openmenu}
+        anchorEl={anchorRef.current}
+        open={open}
         onClose={handleClose}
         MenuListProps={{ "aria-labelledby": "Menu-button" }}
       >
@@ -52,7 +72,7 @@ export default function MenuButton() {
           </ListItemIcon>
           Contact Us
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleScanItem}>
           <ListItemIcon>
             <Images.CameraAltTwoTone />
           </ListItemIcon>
@@ -62,3 +82,5 @@ export default function MenuButton() {
     </div>
   );
 }
+
+export default MenuButton
