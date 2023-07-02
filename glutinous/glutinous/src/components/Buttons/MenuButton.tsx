@@ -9,9 +9,10 @@ import { useState, useRef } from "react";
 
 interface MenuButtonProps {
   setScanState: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({ setScanState, setSearchState}) => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef<HTMLButtonElement>(null);
   
@@ -27,12 +28,19 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
     };
   
     const handleScanItem = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-      if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-        return;
+      if (event.target !== anchorRef.current) {
+        setOpen(false);
+        setScanState((prevState) => !prevState);
       }
-      setOpen(false);
-      setScanState((prevState) => !prevState);
     };
+  
+    const handleSearchItem = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      if (event.target !== anchorRef.current) {
+        setOpen(false);
+        setSearchState((prevState) => !prevState);
+      }
+    };
+
     
 
   return (
@@ -66,11 +74,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
           </ListItemIcon>
           Home
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleSearchItem}>
           <ListItemIcon>
             <Images.PhoneInTalk />
           </ListItemIcon>
-          Contact Us
+          Recent Searches
         </MenuItem>
         <MenuItem onClick={handleScanItem}>
           <ListItemIcon>
