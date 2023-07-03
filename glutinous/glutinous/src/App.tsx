@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Stack, ThemeProvider } from '@mui/material';
+import { Box, Button, Stack, ThemeProvider } from '@mui/material';
 import Home from './pages/Home';
 import SearchButton from './components/Buttons/SearchButton';
 const API_KEY = "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"; // Replace with your actual API key
@@ -56,7 +56,15 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
     <Stack>
-      <Home />
+    <Box sx={{ 
+        display: "flex", 
+        justifyContent: "center", 
+        alignContent: "center", 
+        flexDirection: { xs: "column", md: "row" },
+        padding: { xs: "60px 10px 10px 10px", md: "20px 0 0 0" } 
+      }}>
+    <Home
+    />
       <textarea
         onChange={(e) => setIngredients(e.target.value)}
         placeholder='Enter Your Ingredients List'
@@ -72,7 +80,7 @@ const App = () => {
           Are The ingredients Gluten-free? {isGlutenFree}
         </h3>
 )}
-
+    </Box>
     </Stack>
     </ThemeProvider>
   )
