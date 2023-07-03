@@ -6,6 +6,8 @@ import * as Images from "@mui/icons-material";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { useState, useRef } from "react";
+import { ThemeProvider } from "@emotion/react";
+import theme from "../../themes/theme";
 
 interface MenuButtonProps {
   setScanState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,17 +47,19 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState, setSearchState}) 
 
   return (
     <div>
+      <ThemeProvider theme={{theme}}>
       <Button
       size="large"
       variant="contained"
           startIcon={<Images.MenuTwoTone/>}
-          sx={{ bgcolor: "transparent",
+          sx={{ bgcolor: "primary.main",
           textShadow: '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000'}}
           ref={anchorRef}
           id="composition-button"
           aria-controls={open ? "composition-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
+
           onClick={handleToggle}
           
       >
@@ -87,6 +91,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState, setSearchState}) 
           Scan Item
         </MenuItem>
       </Menu>
+      </ThemeProvider>
     </div>
   );
 }
