@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import Button, { ButtonProps } from '@mui/material/Button';
 
 interface ClickableButtonProps extends ButtonProps {

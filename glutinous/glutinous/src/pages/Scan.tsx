@@ -1,4 +1,3 @@
-import { AirlineSeatReclineNormalTwoTone } from '@mui/icons-material'
 import { Stack, Typography } from '@mui/material'
 import React from 'react'
 

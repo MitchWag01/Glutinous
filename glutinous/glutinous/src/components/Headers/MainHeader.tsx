@@ -1,6 +1,4 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { BrowserRouter as Router, Route,Routes, Link} from "react-router-dom";
 
 
 const Header = () => {

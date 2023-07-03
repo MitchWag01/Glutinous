@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, ButtonProps } from '@mui/material';
 import { MouseEvent } from 'react';
 
@@ -8,6 +8,7 @@ interface ClickableButtonProps extends ButtonProps {
 
 const MainCameraButton = ({ onClick, ...props }: ClickableButtonProps) => {
   const [clickCount, setClickCount] = useState(0);
+  console.log(clickCount)
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setClickCount((prevCount) => prevCount + 1);
@@ -50,7 +51,7 @@ const MainCameraButton = ({ onClick, ...props }: ClickableButtonProps) => {
         {...props}
       >
         <img
-          src="../../public/images/LogoMakr-2ND0aW.png"
+          src="/images/LogoMakr-2ND0aW.png"
           alt="Button Icon"
           style={{
             position: 'absolute',

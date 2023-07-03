@@ -9,6 +9,7 @@ export default function NavBar() {
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
+    console.log(event)
   };
 
   return (
