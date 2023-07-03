@@ -25,7 +25,7 @@ const App = () => {
       top_p: 1,
       frequency_penalty: 0.0,
       presence_penalty: 0.0,
-      stop: ["\n"]
+      stop: [" "]
     };
 
     try {
@@ -33,7 +33,7 @@ const App = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${API_KEY}`
+          "Authorization": `Bearer ${API_KEY}`
         },
         body: JSON.stringify(APIBody)
       });
@@ -63,12 +63,16 @@ const App = () => {
         cols={75}
         rows={10}
       />
-      {/* <Button onClick={callOpenAIAPI}>
+      <Button onClick={callOpenAIAPI}>
         SCAN
-      </Button> */}
+      </Button>
+      
       {isGlutenFree !== "" && (
-        <h3>This food {isGlutenFree} gluten-free</h3>
-      )}
+        <h3>
+          Are The ingredients Gluten-free? {isGlutenFree}
+        </h3>
+)}
+
     </Stack>
     </ThemeProvider>
   )
