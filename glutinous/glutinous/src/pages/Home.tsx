@@ -6,6 +6,7 @@ import { Stack, Box } from '@mui/material';
 import MenuButton from '../components/Buttons/MenuButton';
 import ScanPage from './Scan';
 import SearchPage from './SearchPage';
+import CameraButton from '../components/Buttons/CameraButton';
 
 const Home = () => {
   const [ScanState, setScanState] = useState(false);
@@ -20,6 +21,9 @@ const Home = () => {
       </Box>
       {ScanState && <ScanPage ingredientsList="Jesse Likes a reasonable amount of bread, too bad some people just cant handle it" />}
       {SearchState && <SearchPage searchlist={searchList} />} 
+      <Box sx={{position: 'absolute', bottom: 0, left:'50%'}}>
+      <CameraButton></CameraButton>
+      </Box>
     </Stack>
   );
 };
