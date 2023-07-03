@@ -63,9 +63,9 @@ const App = () => {
         cols={75}
         rows={10}
       />
-      <Button onClick={callOpenAIAPI}>
+      {/* <Button onClick={callOpenAIAPI}>
         SCAN
-      </Button>
+      </Button> */}
       {isGlutenFree !== "" && (
         <h3>This food {isGlutenFree} gluten-free</h3>
       )}
