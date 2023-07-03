@@ -6,12 +6,15 @@ import * as Images from "@mui/icons-material";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { useState, useRef } from "react";
+import { ThemeProvider } from "@emotion/react";
+import theme from "../../themes/theme";
 
 interface MenuButtonProps {
   setScanState: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearchState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({ setScanState, setSearchState}) => {
     const [open, setOpen] = useState(false);
     const anchorRef = useRef<HTMLButtonElement>(null);
   
@@ -27,27 +30,36 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
     };
   
     const handleScanItem = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-      if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
-        return;
+      if (event.target !== anchorRef.current) {
+        setOpen(false);
+        setScanState((prevState) => !prevState);
       }
-      setOpen(false);
-      setScanState((prevState) => !prevState);
     };
+  
+    const handleSearchItem = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+      if (event.target !== anchorRef.current) {
+        setOpen(false);
+        setSearchState((prevState) => !prevState);
+      }
+    };
+
     
 
   return (
     <div>
+      <ThemeProvider theme={{theme}}>
       <Button
       size="large"
       variant="contained"
           startIcon={<Images.MenuTwoTone/>}
-          sx={{ bgcolor: "transparent",
+          sx={{ bgcolor: "primary.main",
           textShadow: '-0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000'}}
           ref={anchorRef}
           id="composition-button"
           aria-controls={open ? "composition-menu" : undefined}
           aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
+
           onClick={handleToggle}
           
       >
@@ -66,11 +78,11 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
           </ListItemIcon>
           Home
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleSearchItem}>
           <ListItemIcon>
             <Images.PhoneInTalk />
           </ListItemIcon>
-          Contact Us
+          Recent Searches
         </MenuItem>
         <MenuItem onClick={handleScanItem}>
           <ListItemIcon>
@@ -79,6 +91,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ setScanState }) => {
           Scan Item
         </MenuItem>
       </Menu>
+      </ThemeProvider>
     </div>
   );
 }

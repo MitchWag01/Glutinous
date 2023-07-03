@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, ThemeProvider } from '@mui/material';
 import Home from './pages/Home';
-
+import SearchButton from './components/Buttons/SearchButton';
 const API_KEY = "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"; // Replace with your actual API key
+import theme from './themes/theme';
+
+
+
 
 const App = () => {
   const [ingredients, setIngredients] = useState("");
@@ -50,7 +54,8 @@ const App = () => {
   }
 
   return (
-    <Stack className="bgImage">
+    <ThemeProvider theme={theme}>
+    <Stack>
       <Home />
       <textarea
         onChange={(e) => setIngredients(e.target.value)}
@@ -65,7 +70,8 @@ const App = () => {
         <h3>This food {isGlutenFree} gluten-free</h3>
       )}
     </Stack>
-  );
+    </ThemeProvider>
+  )
 };
 
 export default App;

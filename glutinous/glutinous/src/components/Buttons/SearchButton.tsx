@@ -2,7 +2,6 @@ import { useState } from "react";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-// themes
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../themes/theme';
 
