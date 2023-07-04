@@ -7,6 +7,7 @@ import NavBar from '../components/NavBar/Navbar';
 import MainCameraButton from '../components/Buttons/MainCameraButton';
 import { createScheduler, createWorker } from 'tesseract.js';
 import CameraButton from '../components/Buttons/CameraButton';
+import Header from '../components/Headers/MainHeader';
 // import MainCameraButton from '../components/Buttons/MainCameraButton';
 // const API_KEY = "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"; // this needs to become an environment variable
 
@@ -129,6 +130,7 @@ const Home = () => {
   return (
     <ThemeProvider theme={theme}>
       <Stack>
+        <Header></Header>
   
         {ScanState && <ScanPage ingredientsList="Jesse's bread preferences are a terror to our society as he likes raisin bread..." />}
         {SearchState && <SearchPage searchlist={searchList} />} 

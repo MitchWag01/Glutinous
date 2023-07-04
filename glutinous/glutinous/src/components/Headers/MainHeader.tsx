@@ -14,8 +14,8 @@ const Header = () => {
         top: 0,
         left: 0,
         right: 0,
-        bottom: '80%',
-        backgroundImage: 'url(/images/CroppedWheat.jpg)',
+        bottom: '90%',
+        backgroundImage: 'url(/images/HeaderAlternate.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         borderBottomLeftRadius: '1em',
@@ -23,7 +23,7 @@ const Header = () => {
         boxShadow: '0px 10px 20px rgba(0,0,0,0.2)',
       }}
     >
-      <Typography
+      {/* <Typography
         variant="h4"
         component="h1"
         sx={{
@@ -34,7 +34,7 @@ const Header = () => {
         }}
       >
         GLUTINOUS
-      </Typography>
+      </Typography> */}
     </Box>
   );
 };

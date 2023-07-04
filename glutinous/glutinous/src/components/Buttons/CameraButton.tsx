@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@mui/material";
-import { DirectionsCarFilled } from "@mui/icons-material";
 
 type MediaStreamConstraints = {
   audio?: boolean;
@@ -9,36 +8,16 @@ type MediaStreamConstraints = {
 
 export function CameraButton(props: { requestedMedia: MediaStreamConstraints }) {
   const { requestedMedia } = props;
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
 
-  const handleButtonClick = async () => {
+  const handleAccessCamera = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia(requestedMedia);
+      const stream = await navigator.mediaDevices.getUserMedia(requestedMedia);
+      setMediaStream(stream);
       if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
+        videoRef.current.srcObject = stream;
         videoRef.current.play();
-
-        const captureImage = () => {
-          const canvas = document.createElement("canvas");
-          if (videoRef.current?.videoWidth && videoRef.current?.videoHeight) {
-            canvas.width = videoRef.current.videoWidth;
-            canvas.height = videoRef.current.videoHeight;
-            const context = canvas.getContext("2d");
-            if (context) {
-              context.drawImage(
-                videoRef.current,
-                0,
-                0,
-                canvas.width,
-                canvas.height
-              );
-              const imageDataURL = canvas.toDataURL("image/jpeg");
-              console.log(imageDataURL);
-            }
-          }
-        };
-
-        setTimeout(captureImage, 1000); // Delay the capture by 1 second to allow the camera to start
       }
     } catch (err) {
       // Handle error
@@ -46,12 +25,47 @@ export function CameraButton(props: { requestedMedia: MediaStreamConstraints }) 
     }
   };
 
+  const handleTakePicture = () => {
+    if (videoRef.current && mediaStream) {
+      const video = videoRef.current;
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageDataURL = canvas.toDataURL("image/jpeg");
+        console.log(imageDataURL);
+      }
+    }
+  };
+
+  const handleStopCamera = () => {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach((track) => track.stop());
+      setMediaStream(null);
+    }
+  };
+
   return (
     <>
-      <Button onClick={handleButtonClick}>Open Camera</Button>
-      <video ref={videoRef} style={{ display: "none" }} />
+      <Button onClick={handleAccessCamera} disabled={!!mediaStream}>
+        Access Camera
+      </Button>
+      <Button onClick={handleTakePicture} disabled={!mediaStream}>
+        Take Picture
+      </Button>
+      {mediaStream && (
+        <Button onClick={handleStopCamera}>Stop Camera</Button>
+      )}
+      <video
+        ref={videoRef}
+        width="100%"
+        height="auto"
+        style={{ display: mediaStream ? "block" : "none" }}
+        playsInline
+      />
     </>
   );
 }
-
 export default CameraButton
