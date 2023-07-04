@@ -1,10 +1,16 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
-const MyDialog = () => {
-  const [open, setOpen] = React.useState(false);
+interface MyDialogProps {
+  page1Text: string;
+  page2Text: string;
+}
 
-  React.useEffect(() => {
+const MyDialog: React.FC<MyDialogProps> = ({ page1Text, page2Text }) => {
+  const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
     const cachedOpen = localStorage.getItem('dialogOpen');
     if (cachedOpen === null) {
       setOpen(true);
@@ -14,22 +20,41 @@ const MyDialog = () => {
   }, []);
 
   const handleClose = () => {
-    setOpen(false);
-    localStorage.setItem('dialogOpen', 'false');
+    if (page === 1) {
+      setPage(2);
+    } else {
+      setOpen(false);
+      localStorage.setItem('dialogOpen', 'false');
+    }
+  };
+
+  const handleBack = () => {
+    setPage(1);
+  };
+
+  const handleClickOutside = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Glutinous Message</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Hello... will finish 
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Acknowledge</Button>
-      </DialogActions>
-    </Dialog>
+      <Dialog open={open} onClose={handleClickOutside} PaperProps={{ style: { backgroundColor: '#FFDAB9' } }}>
+        <DialogTitle>Disclaimer {page}/2</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {page === 1 ? page1Text : page2Text}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {page === 1 ? (
+            <Button onClick={handleClose}>Next</Button>
+          ) : (
+            <>
+              <Button onClick={handleBack}>Back</Button>
+              <Button onClick={handleClose}>Confirm</Button>
+            </>
+          )}
+        </DialogActions>
+      </Dialog>
   );
 };
 
