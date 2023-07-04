@@ -1,27 +1,16 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@mui/material";
 
-type MediaStreamConstraints = {
-  audio?: boolean;
-  video?: boolean | MediaTrackConstraints;
-};
+export function CameraButton() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [imageURL, setImageURL] = useState<string | null>(null);
 
-export function CameraButton(props: { requestedMedia: MediaStreamConstraints }) {
-  const { requestedMedia } = props;
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
-
-  const handleAccessCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia(requestedMedia);
-      setMediaStream(stream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
-    } catch (err) {
-      // Handle error
-      console.log("Camera access denied");
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      // Store image file in browser memory
+      const fileURL = URL.createObjectURL(file);
+      setImageURL(fileURL);
     }
   };
 
@@ -49,23 +38,19 @@ export function CameraButton(props: { requestedMedia: MediaStreamConstraints }) 
 
   return (
     <>
-      <Button onClick={handleAccessCamera} disabled={!!mediaStream}>
-        Access Camera
-      </Button>
-      <Button onClick={handleTakePicture} disabled={!mediaStream}>
-        Take Picture
-      </Button>
-      {mediaStream && (
-        <Button onClick={handleStopCamera}>Stop Camera</Button>
-      )}
-      <video
-        ref={videoRef}
-        width="100%"
-        height="auto"
-        style={{ display: mediaStream ? "block" : "none" }}
-        playsInline
-      />
+      <label>
+        <input
+          type="file"
+          accept="image/*"
+          capture="environment"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+        />
+        <Button component="span">Open Camera</Button>
+      </label>
+      <video ref={videoRef} />
+      {imageURL && <img src={imageURL} alt="Captured image" />}
     </>
   );
 }
-export default CameraButton
+export default CameraButton;
