@@ -5,12 +5,71 @@ import SearchPage from './SearchPage';
 import theme from '../themes/theme';
 import NavBar from '../components/NavBar/Navbar';
 import MainCameraButton from '../components/Buttons/MainCameraButton';
+import { createScheduler, createWorker } from 'tesseract.js';
+import CameraButton from '../components/Buttons/CameraButton';
 // import MainCameraButton from '../components/Buttons/MainCameraButton';
 // const API_KEY = "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"; // this needs to become an environment variable
 
 
 
 const Home = () => {
+
+  const CAPTURE_OPTIONS = {
+    audio: false,
+    video: {
+      facingMode: "environment"
+    }
+  };
+  const processImage = async () => {
+    const scheduler = createScheduler();
+    const worker1 = await createWorker();
+    const worker2 = await createWorker();
+
+    const rectangles = [
+      {
+        left: 0,
+        top: 0,
+        width: 500,
+        height: 250,
+      },
+      {
+        left: 500,
+        top: 0,
+        width: 500,
+        height: 250,
+      },
+    ];
+
+    
+    await worker1.loadLanguage('eng');
+    await worker2.loadLanguage('eng');
+    await worker1.initialize('eng');
+    await worker2.initialize('eng');
+
+    scheduler.addWorker(worker1);
+    scheduler.addWorker(worker2);
+
+    const results = await Promise.all(
+      rectangles.map((rectangle) =>
+        scheduler.addJob('recognize', '../../../public/images/HardTest.png', {
+          rectangle,
+        })
+      )
+    );
+
+
+
+    console.log(results.map((r) => r.data.text.replace(/[\r\n]+/g, ' '))
+    .join(''));
+
+    await scheduler.terminate();
+  };
+
+
+
+
+
+
   const [ScanState, setScanState] = useState(false);
   const [SearchState, setSearchState] = useState(false);
   const [searchList, setSearchList] = useState<string[]>([]);
@@ -80,7 +139,7 @@ const Home = () => {
         left: '50%',
         transform: 'translate(-50%, -50%)'
       }}>
-        <MainCameraButton />
+        <MainCameraButton onClick={processImage} />
           {/* <MainCameraButton />
           {isGlutenFree !== "" && (
             <h3>
@@ -88,6 +147,7 @@ const Home = () => {
             </h3>
           )} */}
         </Box >
+        <CameraButton requestedMedia={CAPTURE_OPTIONS} ></CameraButton>
         <Box   sx={{
                 position: 'absolute',
                 bottom: 0,
