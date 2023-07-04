@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { Stack, Box, ThemeProvider } from '@mui/material';
 import ScanPage from './Scan';
 import SearchPage from './SearchPage';
