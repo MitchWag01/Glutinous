@@ -1,19 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Stack, Box, ThemeProvider } from '@mui/material';
 import ScanPage from './Scan';
 import SearchPage from './SearchPage';
 import theme from '../themes/theme';
 import NavBar from '../components/NavBar/Navbar';
 import MainCameraButton from '../components/Buttons/MainCameraButton';
+
 // import MainCameraButton from '../components/Buttons/MainCameraButton';
 // const API_KEY = "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"; // this needs to become an environment variable
-
 
 
 const Home = () => {
   const [ScanState, setScanState] = useState(false);
   const [SearchState, setSearchState] = useState(false);
   const [searchList, setSearchList] = useState<string[]>([]);
+
+  // setting the state for user warning and acknowledgement
+
+
+
 
   console.log(setScanState)
   console.log(setSearchList)
