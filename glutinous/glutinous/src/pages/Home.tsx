@@ -14,12 +14,12 @@ import CameraButton from '../components/Buttons/CameraButton';
 
 const Home = () => {
 
-  const CAPTURE_OPTIONS = {
-    audio: false,
-    video: {
-      facingMode: "environment"
-    }
-  };
+  // const CAPTURE_OPTIONS = {
+  //   audio: false,
+  //   video: {
+  //     facingMode: "environment"
+  //   }
+  // };
   const processImage = async () => {
     const scheduler = createScheduler();
     const worker1 = await createWorker();
@@ -152,7 +152,7 @@ const Home = () => {
             </h3>
           )} */}
         </Box >
-        <CameraButton requestedMedia={CAPTURE_OPTIONS} ></CameraButton>
+        <CameraButton></CameraButton>
         <Box   sx={{
                 position: 'absolute',
                 bottom: 0,
