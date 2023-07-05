@@ -3,10 +3,16 @@ import { Button, Typography } from "@mui/material";
 import { createScheduler, createWorker } from "tesseract.js";
 import heic2any from "heic2any";
 
+const API_KEY = "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"; // this needs to become an environment variable
+
 export function CameraButton() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [recognizedText, setRecognizedText] = useState<string>("");
+  const [isGlutenFree, setIsGlutenFree] = useState<string | null>(null);
+
+  console.log(imageURL)
+  console.log(recognizedText)
 
   const processImage = async (fileURL: string) => {
     const scheduler = createScheduler();
@@ -20,6 +26,44 @@ export function CameraButton() {
 
     const { data: { text } } = await worker.recognize(fileURL);
     setRecognizedText(text);
+
+    // Call the API with the recognized text
+    const prompt = `Is ${text} gluten-free, Yes or No?`;
+
+    const APIBody = {
+      model: "text-davinci-003",
+      prompt,
+      temperature: 0,
+      max_tokens: 100,
+      top_p: 1,
+      frequency_penalty: 0.0,
+      presence_penalty: 0.0,
+      stop: [" "]
+    };
+
+    try {
+      const response = await fetch("https://api.openai.com/v1/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}`
+        },
+        body: JSON.stringify(APIBody)
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.choices && data.choices.length > 0) {
+        const generatedText = data.choices[0].text.trim();
+        setIsGlutenFree(generatedText);
+      } else {
+        setIsGlutenFree("No response from the API");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setIsGlutenFree("API call failed");
+    }
 
     await scheduler.terminate();
   };
@@ -61,42 +105,43 @@ export function CameraButton() {
       return URL.createObjectURL(blobOrBlobs);
     }
   };
+
   const resizeImage = async (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
       // Create an image element
       const img = document.createElement("img");
       img.src = URL.createObjectURL(file);
-  
+
       img.onload = () => {
         // Create a canvas element
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
-  
+
         // Set the maximum dimensions of the resized image
         const maxWidth = 750;
         const maxHeight = 750;
-  
+
         // Calculate the new dimensions of the image while preserving its aspect ratio
         let newWidth = img.width;
         let newHeight = img.height;
-  
+
         if (newWidth > maxWidth) {
           newHeight *= maxWidth / newWidth;
           newWidth = maxWidth;
         }
-  
+
         if (newHeight > maxHeight) {
           newWidth *= maxHeight / newHeight;
           newHeight = maxHeight;
         }
-  
+
         // Set the dimensions of the canvas
         canvas.width = newWidth;
         canvas.height = newHeight;
-  
+
         // Draw the image onto the canvas
         ctx?.drawImage(img, 0, 0, newWidth, newHeight);
-  
+
         // Convert the canvas to a Blob
         canvas.toBlob(
           (blob) => {
@@ -112,7 +157,6 @@ export function CameraButton() {
       };
     });
   };
-  
 
   return (
     <>
@@ -124,11 +168,55 @@ export function CameraButton() {
           onChange={handleImageChange}
           style={{ display: "none" }}
         />
-        <Button component="span">Open Camera</Button>
+        <Button
+          sx={{
+            position: "relative",
+            width: "180px",
+            height: "180px",
+            borderRadius: "50%",
+            padding: "0",
+            bgcolor: "transparent",
+            "&::before": {
+              content: '""',
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "calc(100% - 0px)",
+              height: "calc(100% - 0px)",
+              borderRadius: "50%",
+              border: "4px solid orange",
+              borderColor: "primary.main",
+            },
+            "&:hover": {
+              bgcolor: "primary.main",
+            },
+            "&:focus": {
+              outline: "none",
+            },
+          }}
+          component="span"
+        >
+          <img
+            src="/images/LogoMakr-2ND0aW.png"
+            alt="Button Icon"
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: "70%",
+              height: "70%",
+              objectFit: "cover",
+            }}
+          />
+        </Button>
       </label>
       <video ref={videoRef} />
-      {recognizedText && (
-        <Typography variant="body1">{recognizedText}</Typography>
+      {isGlutenFree && (
+        <Typography variant="body1">
+          Are the ingredients gluten-free? {isGlutenFree}
+        </Typography>
       )}
     </>
   );
