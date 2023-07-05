@@ -37,7 +37,7 @@ const MainCameraButton = ({ onClick, ...props }: ClickableButtonProps) => {
             width: 'calc(100% - 0px)',
             height: 'calc(100% - 0px)',
             borderRadius: '50%',
-            border: '8px solid orange',
+            border: '4px solid orange',
             borderColor:'primary.main'
           },
          

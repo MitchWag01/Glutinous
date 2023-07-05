@@ -72,7 +72,6 @@ export function CameraButton() {
         processImage(fileURL);
       } else {
         console.log('Recieved non HEIC image, sending to tesseract for scanning')
-
         // Use the file directly
         const fileURL = URL.createObjectURL(file);
         setImageURL(fileURL);
