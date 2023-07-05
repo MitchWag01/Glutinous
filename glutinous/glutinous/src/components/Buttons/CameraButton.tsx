@@ -36,6 +36,8 @@ export function CameraButton() {
     scheduler.addWorker(worker1);
     scheduler.addWorker(worker2);
 
+    console.log('Scanning Image part 1')
+
     const results = await Promise.all(
       rectangles.map((rectangle) =>
         scheduler.addJob("recognize", fileURL, {
@@ -43,6 +45,7 @@ export function CameraButton() {
         })
       )
     );
+    console.log('Scanning Image part 2')
 
     const recognizedText = results
       .map((r) => r.data.text.replace(/[\r\n]+/g, " "))
@@ -54,15 +57,22 @@ export function CameraButton() {
 
   const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
+
+      console.log("Opening camera")
       const file = event.target.files[0];
       // Check if file is in HEIC format
-      if (file.type === "image/heic") {
+      if (file.type === "image/heic"|| file.type === 'image/heic-image') {
+
+        console.log("Detected HEIC, now converting")
         // Convert HEIC to JPG
         const fileURL = await convertHEICtoJPG(file);
         setImageURL(fileURL);
+        console.log(fileURL)
         // Trigger image processing
         processImage(fileURL);
       } else {
+        console.log('Recieved non HEIC image, sending to tesseract for scanning')
+
         // Use the file directly
         const fileURL = URL.createObjectURL(file);
         setImageURL(fileURL);
