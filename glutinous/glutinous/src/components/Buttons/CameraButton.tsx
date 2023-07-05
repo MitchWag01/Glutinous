@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { createScheduler, createWorker } from "tesseract.js";
 import heic2any from "heic2any";
 
@@ -10,11 +10,14 @@ export function CameraButton() {
   const [imageURL, setImageURL] = useState<string | null>(null);
   const [recognizedText, setRecognizedText] = useState<string>("");
   const [isGlutenFree, setIsGlutenFree] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   console.log(imageURL)
   console.log(recognizedText)
 
   const processImage = async (fileURL: string) => {
+    setIsLoading(true);
+
     const scheduler = createScheduler();
     const worker = await createWorker();
     await worker.load();
@@ -65,6 +68,7 @@ export function CameraButton() {
       setIsGlutenFree("API call failed");
     }
 
+    setIsLoading(false);
     await scheduler.terminate();
   };
 
@@ -213,10 +217,16 @@ export function CameraButton() {
         </Button>
       </label>
       <video ref={videoRef} />
-      {isGlutenFree && (
-        <Typography variant="body1">
-          Are the ingredients gluten-free? {isGlutenFree}
-        </Typography>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          {isGlutenFree && (
+            <Typography variant="body1">
+              Are the ingredients gluten-free? {isGlutenFree}
+            </Typography>
+          )}
+        </>
       )}
     </>
   );
