@@ -42,8 +42,9 @@ const Home = () => {
         left: '60%',
         transform: 'translate(-50%, -50%)'
       }}>
-        <CameraButton></CameraButton>
-        </Box >
+             <CameraButton></CameraButton>
+        </Box > 
+  
         <Box   sx={{
                 position: 'absolute',
                 bottom: 0,

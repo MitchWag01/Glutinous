@@ -71,6 +71,16 @@ export function CameraButton() {
     setIsLoading(false);
     await scheduler.terminate();
   };
+  const captureImageFromCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
+  };
 
   const handleImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -108,6 +118,10 @@ export function CameraButton() {
     } else {
       return URL.createObjectURL(blobOrBlobs);
     }
+  };
+
+  const handleCameraButtonClick = () => {
+    captureImageFromCamera();
   };
 
   const resizeImage = async (file: File): Promise<Blob> => {
@@ -200,6 +214,7 @@ export function CameraButton() {
             },
           }}
           component="span"
+          onClick={handleCameraButtonClick}
         >
           <img
             src="/images/LogoMakr-2ND0aW.png"
@@ -214,6 +229,7 @@ export function CameraButton() {
               objectFit: "cover",
             }}
           />
+          
         </Button>
       </label>
       <video ref={videoRef} />
