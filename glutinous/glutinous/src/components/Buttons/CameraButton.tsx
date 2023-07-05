@@ -10,48 +10,17 @@ export function CameraButton() {
 
   const processImage = async (fileURL: string) => {
     const scheduler = createScheduler();
-    const worker1 = await createWorker();
-    const worker2 = await createWorker();
+    const worker = await createWorker();
+    await worker.load();
+    await worker.loadLanguage("eng");
+    await worker.initialize("eng");
+    scheduler.addWorker(worker);
 
-    const rectangles = [
-      {
-        left: 0,
-        top: 0,
-        width: 500,
-        height: 250,
-      },
-      {
-        left: 500,
-        top: 0,
-        width: 500,
-        height: 250,
-      },
-    ];
+    console.log("Scanning Image");
 
-    await worker1.loadLanguage("eng");
-    await worker2.loadLanguage("eng");
-    await worker1.initialize("eng");
-    await worker2.initialize("eng");
+    const { data: { text } } = await worker.recognize(fileURL);
+    setRecognizedText(text);
 
-    scheduler.addWorker(worker1);
-    scheduler.addWorker(worker2);
-
-    console.log('Scanning Image part 1')
-
-    const results = await Promise.all(
-      rectangles.map((rectangle) =>
-        scheduler.addJob("recognize", fileURL, {
-          rectangle,
-        })
-      )
-    );
-    console.log('Scanning Image part 2')
-
-    const recognizedText = results
-      .map((r) => r.data.text.replace(/[\r\n]+/g, " "))
-      .join("");
-
-    setRecognizedText(recognizedText);
     await scheduler.terminate();
   };
 
@@ -59,27 +28,20 @@ export function CameraButton() {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.target.files && event.target.files.length > 0) {
-
-      console.log("Opening camera")
+      console.log("Opening camera");
       const file = event.target.files[0];
-      // Check if file is in HEIC format
-      if (file.type === "image/heic"|| file.type === 'image/heic-image') {
 
-        console.log("Detected HEIC, now converting")
-        // Convert HEIC to JPG
+      if (file.type === "image/heic" || file.type === "image/heic-image") {
+        console.log("Detected HEIC, now converting");
         const fileURL = await convertHEICtoJPG(file);
         setImageURL(fileURL);
-        console.log(fileURL)
-        // Trigger image processing
+        console.log(fileURL);
         processImage(fileURL);
       } else {
-        // Resize the image
         const resizedImageBlob = await resizeImage(file);
-        console.log('Recieved non HEIC image, sending to tesseract for scanning')
-        // Use the resized image
+        console.log("Received non-HEIC image, sending to Tesseract for scanning");
         const fileURL = URL.createObjectURL(resizedImageBlob);
         setImageURL(fileURL);
-        // Trigger image processing
         processImage(fileURL);
       }
     }
@@ -93,11 +55,9 @@ export function CameraButton() {
     });
 
     if (Array.isArray(blobOrBlobs)) {
-      // Handle array of Blobs
       const blob = blobOrBlobs[0];
       return URL.createObjectURL(blob);
     } else {
-      // Handle single Blob
       return URL.createObjectURL(blobOrBlobs);
     }
   };
