@@ -5,16 +5,23 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import { HomeRounded, LiveHelpRounded, Search } from '@mui/icons-material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../themes/theme';
-import { colors } from '@mui/material';
 
-export default function NavBar() {
-  const [value, setValue] = React.useState('recents');
+interface NavBarProps {
+  onNavButtonClick: (button: NavButton) => void;
+  selectedButton: NavButton;
+}
 
+enum NavButton {
+  HOME = 'home',
+  SEARCH = 'search',
+  RECENT_SEARCHES = 'recent_searches',
+  HELP = 'help',
+}
+
+const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue((prevValue) => (prevValue === newValue ? '' : newValue));
-    console.log(value)
+    onNavButtonClick(newValue as NavButton);
   };
-  
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,52 +41,52 @@ export default function NavBar() {
             },
           },
         }}
-        value={value}
+        value={selectedButton}
         onChange={handleChange}
       >
- <BottomNavigationAction
-  label="Home"
-  value="home"
-  icon={<HomeRounded sx={{ fontSize: '30px', color: 'secondary.main' ? theme.palette.secondary.main : 'inherit' }} />}
-  sx={{
-    '& .MuiBottomNavigationAction-label': {
-      color: value === 'home' ? theme.palette.secondary.main : 'inherit',
-    },
-  }}
-/>
-<BottomNavigationAction
-  label="Search"
-  value="search"
-  icon={<Search sx={{ fontSize: '30px', color: 'secondary.main'? theme.palette.secondary.main : 'inherit' }} />}
-  sx={{
-    '& .MuiBottomNavigationAction-label': {
-      color: value === 'search' ? theme.palette.secondary.main : 'inherit',
-    },
-  }}
-/>
-<BottomNavigationAction
-  label="Recent"
-  value="recent_searches"
-  icon={<RestoreIcon sx={{ fontSize: '30px', color: 'secondary.main' ? theme.palette.secondary.main : 'inherit' }} />}
-  sx={{
-    '& .MuiBottomNavigationAction-label': {
-      color: value === 'recent_searches' ? theme.palette.secondary.main : 'inherit',
-    },
-  }}
-/>
-<BottomNavigationAction
-  label="Help"
-  value="help"
-  icon={<LiveHelpRounded sx={{ fontSize: '30px', color: 'secondary.main' }} />}
-  sx={{
-    '& .MuiBottomNavigationAction-label': {
-      color: value === 'help' ? theme.palette.secondary.main : 'inherit',
-    },
-  }}
-/>
-
-
+        <BottomNavigationAction
+          label="Home"
+          value={NavButton.HOME}
+          icon={<HomeRounded sx={{ fontSize: '30px', color: 'secondary.main' }} />}
+          sx={{
+            '& .MuiBottomNavigationAction-label': {
+              color: selectedButton === NavButton.HOME ? theme.palette.secondary.main : 'inherit',
+            },
+          }}
+        />
+        <BottomNavigationAction
+          label="Search"
+          value={NavButton.SEARCH}
+          icon={<Search sx={{ fontSize: '30px', color: 'secondary.main' }} />}
+          sx={{
+            '& .MuiBottomNavigationAction-label': {
+              color: selectedButton === NavButton.SEARCH ? theme.palette.secondary.main : 'inherit',
+            },
+          }}
+        />
+        <BottomNavigationAction
+          label="Recent"
+          value={NavButton.RECENT_SEARCHES}
+          icon={<RestoreIcon sx={{ fontSize: '30px', color: 'secondary.main' }} />}
+          sx={{
+            '& .MuiBottomNavigationAction-label': {
+              color: selectedButton === NavButton.RECENT_SEARCHES ? theme.palette.secondary.main : 'inherit',
+            },
+          }}
+        />
+        <BottomNavigationAction
+          label="Help"
+          value={NavButton.HELP}
+          icon={<LiveHelpRounded sx={{ fontSize: '30px', color: 'secondary.main' }} />}
+          sx={{
+            '& .MuiBottomNavigationAction-label': {
+              color: selectedButton === NavButton.HELP ? theme.palette.secondary.main : 'inherit',
+            },
+          }}
+        />
       </BottomNavigation>
     </ThemeProvider>
   );
-}
+};
+
+export default NavBar;

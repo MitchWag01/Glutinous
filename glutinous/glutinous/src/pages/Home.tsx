@@ -1,6 +1,5 @@
 import { useState} from 'react';
 import { Stack, Box, ThemeProvider } from '@mui/material';
-import ScanPage from './Scan';
 import SearchPage from './SearchPage';
 import theme from '../themes/theme';
 import NavBar from '../components/NavBar/Navbar';
@@ -30,29 +29,15 @@ const Home = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Stack>
-        <Header></Header>
-  
-        {ScanState && <ScanPage ingredientsList="Jesse's bread preferences are a terror to our society as he likes raisin bread..." />}
-        {SearchState && <SearchPage searchlist={searchList} />} 
-        
+      <Stack>        
         <Box       sx={{
         position: 'absolute',
-        top: '50%',
-        left: '60%',
+        top: '60%',
+        left: '64%',
         transform: 'translate(-50%, -50%)'
       }}>
              <CameraButton></CameraButton>
         </Box > 
-  
-        <Box   sx={{
-                position: 'absolute',
-                bottom: 0,
-                left: '50%',
-                transform: 'translateX(-50%)'
-              }}>
-          <NavBar />
-        </Box>
       </Stack>
     </ThemeProvider>
     );
