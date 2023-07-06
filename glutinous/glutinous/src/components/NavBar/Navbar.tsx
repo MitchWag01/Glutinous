@@ -53,7 +53,7 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
     <ThemeProvider theme={theme}>
       <BottomNavigation
         sx={{
-          width: 400,
+          width: 500,
           bgcolor: 'primary.main',
           borderRadius: 10,
           '& .MuiBottomNavigationAction-root': {
@@ -66,7 +66,6 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
               outline: '2px solid transparent', // Set a transparent outline
             },
           },
-          pl:2,pr:2
         }}
         value={selectedButton}
         onChange={handleChange}
