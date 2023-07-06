@@ -1,9 +1,8 @@
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../themes/theme';
-import { HomeRounded, LiveHelpRounded, Search, History } from '@mui/icons-material';
+import RestoreIcon from '@mui/icons-material/Restore';
+import { HomeRounded, LiveHelpRounded } from '@mui/icons-material';
 
 enum NavButton {
   HOME = 'home',
@@ -17,101 +16,51 @@ interface NavBarProps {
   selectedButton: NavButton;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => {
+const NavBar: React.FC<NavBarProps> = ({  }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    onNavButtonClick(newValue as NavButton);
-  };
-
-  const renderIcon = (button: NavButton) => {
-    const iconSize = 30; // Adjust the size as desired
-    if (button === NavButton.HOME && selectedButton === NavButton.HOME) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Home" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.SEARCH && selectedButton === NavButton.SEARCH) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Search" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.RECENT_SEARCHES && selectedButton === NavButton.RECENT_SEARCHES) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Recent" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.HELP && selectedButton === NavButton.HELP) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Help" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    }
-
-    switch (button) {
-      case NavButton.HOME:
-        return <HomeRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-        case NavButton.SEARCH:
-          return <Search sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-          case NavButton.RECENT_SEARCHES:
-            return <History sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-
-      case NavButton.HELP:
-        return <LiveHelpRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-        default:
-        return null;
-    }
+    setValue(newValue);
+    console.log(event)
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <BottomNavigation
-        sx={{
-          width: 500,
-          bgcolor: 'primary.main',
-          borderRadius: 10,
-          '& .MuiBottomNavigationAction-root': {
-            color: 'secondary.main',
-            borderRadius: 5,
-            '&.Mui-selected': {
-              backgroundColor: 'transparent',
-            },
-            '&:focus': {
-              outline: '2px solid transparent', // Set a transparent outline
-            },
+    <BottomNavigation
+      sx={{
+        width: 500,
+        bgcolor: 'primary.main',
+        borderRadius: 10,
+        '& .MuiBottomNavigationAction-root': {
+          color: 'secondary.main',
+          borderRadius: 5,
+          '&.Mui-selected': {
+            backgroundColor: 'transparent',
           },
-        }}
-        value={selectedButton}
-        onChange={handleChange}
-      >
-        <BottomNavigationAction
-          label="Home"
-          value={NavButton.HOME}
-          icon={renderIcon(NavButton.HOME)}
-          sx={{
-            '& .MuiBottomNavigationAction-label': {
-              color: selectedButton === NavButton.HOME ? theme.palette.secondary.main : 'inherit',
-            },
-          }}
-        />
-        <BottomNavigationAction
-          label="Search"
-          value={NavButton.SEARCH}
-          icon={renderIcon(NavButton.SEARCH)}
-          sx={{
-            '& .MuiBottomNavigationAction-label': {
-              color: selectedButton === NavButton.SEARCH ? theme.palette.secondary.main : 'inherit',
-            },
-          }}
-        />
-        <BottomNavigationAction
-          label="Recent"
-          value={NavButton.RECENT_SEARCHES}
-          icon={renderIcon(NavButton.RECENT_SEARCHES)}
-          sx={{
-            '& .MuiBottomNavigationAction-label': {
-              color: selectedButton === NavButton.RECENT_SEARCHES ? theme.palette.secondary.main : 'inherit',
-            },
-          }}
-        />
-        <BottomNavigationAction
-          label="Help"
-          value={NavButton.HELP}
-          icon={renderIcon(NavButton.HELP)}
-          sx={{
-            '& .MuiBottomNavigationAction-label': {
-              color: selectedButton === NavButton.HELP ? theme.palette.secondary.main : 'inherit',
-            },
-          }}
-        />
-      </BottomNavigation>
-    </ThemeProvider>
+          '&:focus': {
+            outline: '2px solid transparent', // Set a transparent outline
+          },
+        },
+        '& .MuiSvgIcon-root': {
+          fontSize: '35px',
+        },
+      }}
+      value={value}
+      onChange={handleChange}
+    >
+      <BottomNavigationAction
+        label="Home"
+        value="home"
+        icon={<HomeRounded sx={{ color: 'secondary.main' }} />}
+      />
+      <BottomNavigationAction
+        label="Recent Searches"
+        value="recent_searches"
+        icon={<RestoreIcon sx={{ color: 'secondary.main' }} />}
+      />
+      <BottomNavigationAction
+        label="Help"
+        value="help"
+        icon={<LiveHelpRounded sx={{ color: 'secondary.main' }} />}
+      />
+    </BottomNavigation>
   );
 };
 
