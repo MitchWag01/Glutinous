@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: #213547;
-  background-color: #FFDAB9;
+  /* Remove the static color values */
+  color: var(--text-color, #213547);
+  background-color: var(--background-color, #FFDAB9);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -16,7 +16,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--link-color, #646cff);
   text-decoration: inherit;
 }
 a:hover {
@@ -44,17 +44,28 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #f9f9f9;
-  cursor:pointer;
-    transition:border-color .25s
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 button:hover {
-    border-color:#646cff
+  border-color: #646cff;
 }
 button:focus,
 button:focus-visible {
-    outline:auto -webkit-focus-ring-color
+  outline: auto -webkit-focus-ring-color;
 }
 
 .bgImage {
-    background-image:url(./logo.png)
+  background-image: url(./logo.png);
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #ffffff;
+    --background-color: #dc6032;
+    --link-color: #646cff;
+    --primary-color: #dc6032;
+    --secondary-color: #FBF8BE;
+  }
 }
