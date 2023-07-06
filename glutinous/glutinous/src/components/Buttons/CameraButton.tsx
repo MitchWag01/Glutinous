@@ -2,6 +2,9 @@ import { useRef, useState } from "react";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { createScheduler, createWorker } from "tesseract.js";
 import heic2any from "heic2any";
+
+
+
 const API_KEY = "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"; // this needs to become an environment variable
 
 
@@ -43,6 +46,7 @@ export function CameraButton() {
       presence_penalty: 0.0,
       stop: [" "]
     };
+
 
     try {
       const response = await fetch("https://api.openai.com/v1/completions", {
