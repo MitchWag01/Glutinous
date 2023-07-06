@@ -3,7 +3,10 @@ import { Button, CircularProgress, Typography } from "@mui/material";
 import { createScheduler, createWorker } from "tesseract.js";
 import heic2any from "heic2any";
 
+
+
 const API_KEY = "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"; // this needs to become an environment variable
+
 
 export function CameraButton() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -44,6 +47,7 @@ export function CameraButton() {
       stop: [" "]
     };
 
+
     try {
       const response = await fetch("https://api.openai.com/v1/completions", {
         method: "POST",
@@ -70,6 +74,16 @@ export function CameraButton() {
 
     setIsLoading(false);
     await scheduler.terminate();
+  };
+  const captureImageFromCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
   };
 
   const handleImageChange = async (
@@ -108,6 +122,10 @@ export function CameraButton() {
     } else {
       return URL.createObjectURL(blobOrBlobs);
     }
+  };
+
+  const handleCameraButtonClick = () => {
+    captureImageFromCamera();
   };
 
   const resizeImage = async (file: File): Promise<Blob> => {
@@ -200,6 +218,7 @@ export function CameraButton() {
             },
           }}
           component="span"
+          onClick={handleCameraButtonClick}
         >
           <img
             src="/images/LogoMakr-2ND0aW.png"
@@ -214,6 +233,7 @@ export function CameraButton() {
               objectFit: "cover",
             }}
           />
+          
         </Button>
       </label>
       <video ref={videoRef} />
