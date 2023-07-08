@@ -6,7 +6,7 @@ import * as Images from "@mui/icons-material";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import { useState, useRef } from "react";
 import { ThemeProvider } from "@emotion/react";
-import theme from "../../themes/theme";
+import theme from "../../../themes/theme";
 
 interface MenuButtonProps {
   setScanState: React.Dispatch<React.SetStateAction<boolean>>;

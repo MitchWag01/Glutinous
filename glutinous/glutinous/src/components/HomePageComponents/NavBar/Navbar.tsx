@@ -2,8 +2,9 @@ import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../themes/theme';
+import theme from '../../../themes/theme';
 import { HomeRounded, LiveHelpRounded, Search, History } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 enum NavButton {
   HOME = 'home',
@@ -81,6 +82,8 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
           label="Home"
           value={NavButton.HOME}
           icon={renderIcon(NavButton.HOME)}
+          component={Link}
+          to="/usermenu"
           sx={{
             '& .MuiBottomNavigationAction-label': {
               color: selectedButton === NavButton.HOME ? theme.palette.secondary.main : 'inherit',

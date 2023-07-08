@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../themes/theme';
+import theme from "../../../themes/theme";
 
 const SearchButton = () => {
     const [clicked, setClicked] = useState(false)
