@@ -18,33 +18,40 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => {
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    onNavButtonClick(newValue as NavButton);
+  const handleChange = (event: React.SyntheticEvent, newValue: NavButton) => {
+    onNavButtonClick(newValue);
   };
 
   const renderIcon = (button: NavButton) => {
     const iconSize = 30; // Adjust the size as desired
-    if (button === NavButton.HOME && selectedButton === NavButton.HOME) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Home" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.SEARCH && selectedButton === NavButton.SEARCH) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Search" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.RECENT_SEARCHES && selectedButton === NavButton.RECENT_SEARCHES) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Recent" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    } else if (button === NavButton.HELP && selectedButton === NavButton.HELP) {
-      return <img src="../../../public/images/LogoMakr-2ND0aW.png" alt="Help" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />;
-    }
+    const selected = selectedButton === button;
 
     switch (button) {
       case NavButton.HOME:
-        return <HomeRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-        case NavButton.SEARCH:
-          return <Search sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-          case NavButton.RECENT_SEARCHES:
-            return <History sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-
+        return selected ? (
+          <img src="/images/LogoMakr-2ND0aW.png" alt="Home" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
+        ) : (
+          <HomeRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
+        );
+      case NavButton.SEARCH:
+        return selected ? (
+          <img src="/images/LogoMakr-2ND0aW.png" alt="Search" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
+        ) : (
+          <Search sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
+        );
+      case NavButton.RECENT_SEARCHES:
+        return selected ? (
+          <img src="/images/LogoMakr-2ND0aW.png" alt="Recent" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
+        ) : (
+          <History sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
+        );
       case NavButton.HELP:
-        return <LiveHelpRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />;
-        default:
+        return selected ? (
+          <img src="/images/LogoMakr-2ND0aW.png" alt="Help" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
+        ) : (
+          <LiveHelpRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
+        );
+      default:
         return null;
     }
   };
@@ -53,7 +60,7 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
     <ThemeProvider theme={theme}>
       <BottomNavigation
         sx={{
-          width: 400,
+          width: '100%',
           bgcolor: 'primary.main',
           borderRadius: 10,
           '& .MuiBottomNavigationAction-root': {
@@ -63,10 +70,9 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
               backgroundColor: 'transparent',
             },
             '&:focus': {
-              outline: '2px solid transparent', // Set a transparent outline
+              outline: 'none',
             },
           },
-          pl:2,pr:2
         }}
         value={selectedButton}
         onChange={handleChange}

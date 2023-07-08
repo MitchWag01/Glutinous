@@ -172,9 +172,12 @@ export function CameraButton() {
           onChange={handleImageChange}
           style={{ display: "none" }}
         />
-        <Button
+<Button
           sx={{
-            position: "relative",
+            position: "fixed",
+            bottom: "16px",
+            left: "50%",
+            transform: "translateX(-50%)",
             width: "180px",
             height: "180px",
             borderRadius: "50%",

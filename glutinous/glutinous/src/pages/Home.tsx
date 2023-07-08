@@ -5,18 +5,20 @@ import CameraButton from '../components/Buttons/CameraButton';
 const Home = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Stack>        
-        <Box       sx={{
-        position: 'absolute',
-        top: '60%',
-        left: '64%',
-        transform: 'translate(-50%, -50%)'
-      }}>
-             <CameraButton></CameraButton>
-        </Box > 
+      <Stack>
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: '32%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <CameraButton />
+        </Box>
       </Stack>
     </ThemeProvider>
-    );
+  );
 };
 
 export default Home;
