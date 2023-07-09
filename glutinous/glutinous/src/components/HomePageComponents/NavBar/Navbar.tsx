@@ -83,7 +83,7 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
           value={NavButton.HOME}
           icon={renderIcon(NavButton.HOME)}
           component={Link}
-          to="/usermenu"
+          to="/menu"
           sx={{
             '& .MuiBottomNavigationAction-label': {
               color: selectedButton === NavButton.HOME ? theme.palette.secondary.main : 'inherit',
