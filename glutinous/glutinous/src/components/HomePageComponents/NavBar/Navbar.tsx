@@ -27,21 +27,22 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
   };
 
  
-  const [firstclick,setFirstclick]= React.useState(false);
+  const [firstClick,setFirstclick]= React.useState(true);
 
 
-  const renderIcon = (button: NavButton) => {
-    if(firstclick){
-
+  const renderIcon = () => {
+    if(firstClick){
       return <img src="./images/LogoMakr-2ND0aW.png" style={{ width: '30px', height: '30px' }} />
-
     }
     else{
       return <Search sx={{ fontSize: '30px', color: 'secondary.main' }} />
-
     }
   };
-  // Rest of the component code
+
+   function SwitchIcon() {
+    setFirstclick(!firstClick)
+  }
+
 
 
   return (
@@ -80,7 +81,8 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
         <BottomNavigationAction
           label="Search"
           value={NavButton.SEARCH}
-          icon={renderIcon(NavButton.SEARCH)}
+          icon={renderIcon()}
+          onClick={SwitchIcon}
           sx={{
             '& .MuiBottomNavigationAction-label': {
               color: selectedButton === NavButton.SEARCH ? theme.palette.secondary.main : 'inherit',
