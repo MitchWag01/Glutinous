@@ -57,6 +57,7 @@ button:focus-visible {
 
 .bgImage {
   background-image: url(./logo.png);
+  background-color: var(--background-color, #FFDAB9);
 }
 
 /* Dark mode styles */
@@ -64,7 +65,7 @@ button:focus-visible {
   :root {
     --text-color: #ffffff;
     --background-color: #dc6032;
-    --link-color: #646cff;
+    --link-color: #40403d;
     --primary-color: #dc6032;
     --secondary-color: #FBF8BE;
   }
