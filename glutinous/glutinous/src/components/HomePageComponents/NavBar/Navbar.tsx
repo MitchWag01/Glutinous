@@ -26,21 +26,20 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
     onNavButtonClick(newValue);
   };
 
-  const iconList = [
-    null,
-    <img src={require('./images/LogoMakr-2ND0aW.png').default} alt="Home" style={{ width: '30px', height: '30px' }} />,
-    <Search sx={{ fontSize: '30px', color: 'secondary.main' }} />,
-  ];
+ 
+  const [firstclick,setFirstclick]= React.useState(false);
 
-  const [clicktrack, setClickTrack] = React.useState(0);
-
-  const handleIconClick = () => {
-    setClickTrack(prevCount => prevCount + 1);
-  };
 
   const renderIcon = (button: NavButton) => {
-    console.log('rendering');
-    return iconList[clicktrack % 2];
+    if(firstclick){
+
+      return <img src="./images/LogoMakr-2ND0aW.png" style={{ width: '30px', height: '30px' }} />
+
+    }
+    else{
+      return <Search sx={{ fontSize: '30px', color: 'secondary.main' }} />
+
+    }
   };
   // Rest of the component code
 
