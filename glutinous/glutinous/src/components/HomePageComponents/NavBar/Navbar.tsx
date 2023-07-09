@@ -3,7 +3,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../../themes/theme';
-import { HomeRounded, LiveHelpRounded, Search, History } from '@mui/icons-material';
+import { HomeRounded, LiveHelpRounded, Search, History, Menu } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 enum NavButton {
@@ -18,44 +18,32 @@ interface NavBarProps {
   selectedButton: NavButton;
 }
 
+
+
+
 const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => {
   const handleChange = (event: React.SyntheticEvent, newValue: NavButton) => {
     onNavButtonClick(newValue);
   };
 
-  const renderIcon = (button: NavButton) => {
-    const iconSize = 30; // Adjust the size as desired
-    const selected = selectedButton === button;
+  const iconList = [
+    null,
+    <img src={require('./images/LogoMakr-2ND0aW.png').default} alt="Home" style={{ width: '30px', height: '30px' }} />,
+    <Search sx={{ fontSize: '30px', color: 'secondary.main' }} />,
+  ];
 
-    switch (button) {
-      case NavButton.HOME:
-        return selected ? (
-          <img src="/images/LogoMakr-2ND0aW.png" alt="Home" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
-        ) : (
-          <HomeRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
-        );
-      case NavButton.SEARCH:
-        return selected ? (
-          <img src="/images/LogoMakr-2ND0aW.png" alt="Search" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
-        ) : (
-          <Search sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
-        );
-      case NavButton.RECENT_SEARCHES:
-        return selected ? (
-          <img src="/images/LogoMakr-2ND0aW.png" alt="Recent" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
-        ) : (
-          <History sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
-        );
-      case NavButton.HELP:
-        return selected ? (
-          <img src="/images/LogoMakr-2ND0aW.png" alt="Help" style={{ width: `${iconSize}px`, height: `${iconSize}px` }} />
-        ) : (
-          <LiveHelpRounded sx={{ fontSize: `${iconSize}px`, color: 'secondary.main' }} />
-        );
-      default:
-        return null;
-    }
+  const [clicktrack, setClickTrack] = React.useState(0);
+
+  const handleIconClick = () => {
+    setClickTrack(prevCount => prevCount + 1);
   };
+
+  const renderIcon = (button: NavButton) => {
+    console.log('rendering');
+    return iconList[clicktrack % 2];
+  };
+  // Rest of the component code
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -79,9 +67,9 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
         onChange={handleChange}
       >
         <BottomNavigationAction
-          label="Home"
+          label="Menu"
           value={NavButton.HOME}
-          icon={renderIcon(NavButton.HOME)}
+          icon={<Menu sx={{ fontSize: `30px`, color: 'secondary.main' }} />}
           component={Link}
           to="/menu"
           sx={{
@@ -103,7 +91,7 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
         <BottomNavigationAction
           label="Recent"
           value={NavButton.RECENT_SEARCHES}
-          icon={renderIcon(NavButton.RECENT_SEARCHES)}
+          icon={<History sx={{ fontSize: `30px`, color: 'secondary.main' }} />}
           sx={{
             '& .MuiBottomNavigationAction-label': {
               color: selectedButton === NavButton.RECENT_SEARCHES ? theme.palette.secondary.main : 'inherit',
@@ -113,7 +101,7 @@ const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => 
         <BottomNavigationAction
           label="Help"
           value={NavButton.HELP}
-          icon={renderIcon(NavButton.HELP)}
+          icon={<LiveHelpRounded sx={{ fontSize: `30px`, color: 'secondary.main' }} />}
           sx={{
             '& .MuiBottomNavigationAction-label': {
               color: selectedButton === NavButton.HELP ? theme.palette.secondary.main : 'inherit',

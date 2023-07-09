@@ -21,18 +21,24 @@ enum NavButton {
 const Home = (): JSX.Element => {
   useLockBodyScroll();
   const [selectedButton, setSelectedButton] = useState<NavButton>(NavButton.HOME);
+  const [IsScan, setISScan]= useState(true)
 
   const handleNavButtonClick = (button: NavButton): void => {
-    setSelectedButton(button);
+    if (selectedButton==NavButton.SEARCH){
+      setISScan(!IsScan)
+      setSelectedButton(button)
+    }
+    else{
+    setSelectedButton(button);}
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Stack>
         <Header />
-        {selectedButton === NavButton.HOME && <MainPage />}
-        {selectedButton === NavButton.SEARCH && <SearchPage searchlist={[]} />}
-        {selectedButton === NavButton.RECENT_SEARCHES && <Recent ingredientsList={''} />}
+        {selectedButton === NavButton.SEARCH && IsScan && <SearchPage searchlist={[]} />}
+        {selectedButton === NavButton.SEARCH && !IsScan && <MainPage />}
+        {selectedButton === NavButton.RECENT_SEARCHES && <Recent ingredientsList=''/>}
         {selectedButton === NavButton.HELP && <Help_page />}
         <MyDialog
           page1Text="Disclaimer: This app is a project being developed by students and does not guarantee that any food is gluten-free. The information provided is for informational purposes only and should not be considered as professional advice. The app aims to make it easier to find gluten in certain foods, but accuracy is not guaranteed. Always consult with a healthcare professional or a qualified expert for accurate and personalized dietary guidance."
