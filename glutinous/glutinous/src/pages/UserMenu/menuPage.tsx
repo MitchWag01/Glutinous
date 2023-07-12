@@ -1,6 +1,6 @@
 import React from 'react';
 import { mainListItems, secondaryListItems } from '../../components/UserMenu/menuItems';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';

@@ -10,7 +10,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import { Link } from 'react-router-dom';
-import { Typography } from '@mui/material';
 
 export const mainListItems = (
   <React.Fragment>

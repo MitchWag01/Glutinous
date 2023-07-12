@@ -1,4 +1,3 @@
-import React from "react";
 import { UserInformationProps } from "../Functions/UserInformation";
 import { Typography } from "@mui/material";
 

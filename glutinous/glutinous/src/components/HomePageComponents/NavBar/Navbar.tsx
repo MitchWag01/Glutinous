@@ -3,7 +3,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../../themes/theme';
-import { HomeRounded, LiveHelpRounded, Search, History, Menu } from '@mui/icons-material';
+import { LiveHelpRounded, Search, History, Menu } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 enum NavButton {
@@ -22,7 +22,7 @@ interface NavBarProps {
 
 
 const NavBar: React.FC<NavBarProps> = ({ onNavButtonClick, selectedButton }) => {
-  const handleChange = (event: React.SyntheticEvent, newValue: NavButton) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: NavButton) => {
     onNavButtonClick(newValue);
   };
 

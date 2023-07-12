@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Stack, Box, ThemeProvider } from '@mui/material';
-import { Link } from 'react-router-dom';
 import MainPage from './mainPage';
 import theme from '../themes/theme';
 import useLockBodyScroll from '../../hooks';
