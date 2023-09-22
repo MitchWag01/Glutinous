@@ -1,8 +1,6 @@
 # Introduction 
-This application is a project for us to publish into our personal portfolios
-Our objective is to create a working azure pipeline that then supports our web application
-our web app is going to be something that can scan an ingredients list and tell someone 
-if that list contains gluten or not
+This application has a goal to allow the user to Scan an ingredients list that then tells
+the user if that specific item is gluten free
 
 # Getting Started
 Code Copy Instructions
@@ -26,7 +24,7 @@ current progress
 #testing the pushing to devOps
 
 # Contribute
-When attemping to push code I recoomend using the GitLens extension in vs code or visual studio
+When attempting to push code I recommend using the GitLens extension in vs code or visual studio
 You are required to do your standard push. Where you will first make sure that your repo is up to date
 then you will push your code to the repo.
 
